@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -f "${LANDO_WEBROOT}/.htaccess" ]; then
-    if [ ! -f "${LANDO_MOUNT}/vendor/magento/core-ee/.htaccess" ]; then
-        cp ${LANDO_MOUNT}/vendor/magento/core-ee/.htaccess ${LANDO_WEBROOT}
-        echo "Deployed Magento .htaccess from ${LANDO_MOUNT}/vendor/magento/core-ee/.htaccess"
-    fi
-    if [ ! -f "${LANDO_MOUNT}/vendor/magento/core/.htaccess" ]; then
-        cp ${LANDO_MOUNT}/vendor/magento/core/.htaccess ${LANDO_WEBROOT}
-        echo "Deployed Magento .htaccess from ${LANDO_MOUNT}/vendor/magento/core/.htaccess"
-    fi
+if [ ! -f "${LANDO_WEBROOT}/.htaccess" ] && [ ! -z ${MAGENTO_HTACCESS+x} ] && [ -e "${LANDO_MOUNT}/${MAGENTO_HTACCESS}" ]; then
+    cp ${LANDO_MOUNT}/${MAGENTO_HTACCESS} ${LANDO_WEBROOT}
+    echo "Deployed Magento .htaccess from ${LANDO_MOUNT}/${MAGENTO_HTACCESS}"
 fi
